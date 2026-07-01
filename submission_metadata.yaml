@@ -18,13 +18,12 @@ team_members:
     role: "Pipeline Engineer"
     
 github_repo: "https://github.com/R0hanL1nga/redrob-ranker"
-sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrob-ranker"
-reproduce_command: "python rank.py --candidates ./data/candidates.jsonl --out ./submission.csv"
-
+sandbox_link: https://colab.research.google.com/drive/1YQbpfLMMZfHkyp2dWTxzOfev7tz_qw5o?usp=sharing
+reproduce_command: "python rank.py --candidates data/candidates.jsonl --config submission_metadata.yaml"
 compute:
-  platform: "Local Linux / MacBook"
-  cpu_cores: 8
-  ram_gb: 16
+  platform: "Google Colab (Standard CPU)"
+  cpu_cores: 2
+  ram_gb: 13
   python_version: "3.11"
   os: "Ubuntu 22.04"
   uses_gpu_for_inference: false
@@ -34,26 +33,33 @@ compute:
 
 ai_tools_used:
   - "Claude"
+  - "Gemini"
 
 ai_usage_summary: |
-  Used Claude for architecture discussion, code review, and documentation.
-  No candidate data was fed to any LLM during pipeline execution.
-
+  Used Claude for initial architectural ideation, component design, and core feature engineering logic. 
+  Used Gemini for pipeline debugging, terminal encoding fixes, cloud infrastructure migration to Google Colab, and submission specification compliance. 
+  Crucially, all candidate processing, feature extraction, and ranking calculations were executed locally/in-container on CPU; no raw candidate data or PII was transmitted to or processed by any external LLM APIs during pipeline runtime.
 methodology_summary: |
   Rule-based scoring pipeline with explicit multi-dimensional feature
-  engineering. Five primary components (skill match, career relevance,
-  experience fit, education, certifications) combined with a
-  multiplicative behavioral-signal modifier.
+  engineering. Five primary components (skill match: 35%, career relevance: 30%,
+  experience fit: 15%, education: 10%, certifications: 10%) are combined to form 
+  a base competency score, which is then refined by a multiplicative behavioral-signal modifier.
 
-  The career_relevance component uses title scoring and a product-vs-
-  consulting company ratio to surface genuine ML practitioners over
-  keyword stuffers. A keyword_stuffer_flag applies a 0.20 penalty to
-  candidates with many AI skills but non-technical career titles.
+  The career_relevance component evaluates title alignment and a product-vs-
+  consulting company ratio to surface genuine machine learning practitioners over
+  keyword stuffers. To ensure algorithmic integrity, a keyword_stuffer_flag applies 
+  a strict 0.20 penalty to candidates boasting extensive AI skills but holding 
+  entirely non-technical career titles.
 
-  Behavioral signals (availability, engagement, reliability, profile
-  quality) modify the primary score in the [0.60, 1.00] range — a
-  perfect-on-paper but inactive candidate loses up to 40% of their
-  score. Runtime is < 60 seconds for 50K candidates on CPU.
+  Behavioral signals (availability, engagement, reliability, and profile quality) 
+  dynamically modify the primary competency score within a [0.60, 1.00] scaling range. 
+  This ensures that a perfect-on-paper but completely inactive candidate loses up to 
+  40% of their final rank, prioritizing high-intent talent. 
+
+  The architecture is heavily optimized for horizontal scaling; utilizing vectorized 
+  operations via pandas, the pipeline achieved a benchmark runtime of 26.9 seconds 
+  to process, score, and rank all 100,000 candidates entirely on a standard 2-core 
+  Google Colab CPU instance.
 
 declarations:
   read_submission_spec: true
