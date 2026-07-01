@@ -1,17 +1,23 @@
 # submission_metadata.yaml  ← fill in before submitting
-team_name: "your-team-name"
+team_name: "Socket"
 
 primary_contact:
-  name: "Your Name"
-  email: "you@example.com"
-  phone: "+91-XXXXXXXXXX"
+  name: "Y.V.Varshtith"
+  email: "yarisingivrshith@gmail.com"
+  phone: "+91-9100333967"
 
 team_members:
-  - name: "Your Name"
-    email: "you@example.com"
-    role: "Team Lead / ML Engineer"
-
-github_repo: "https://github.com/YOUR_USERNAME/redrob-ranker"
+  - name: "Y.V.Varshith"
+    email: "yarisingivrshith@gmail.com"
+    role: "Team Lead / Backend"
+  - name: "Alekhya"
+    email: "alekhyalingolu@gmail.com"
+    role: "Github"
+  - name: "Rohan Linga"
+    email: "rohanlinga11@gmail.com"
+    role: "Pipeline Engineer"
+    
+github_repo: "https://github.com/R0hanL1nga/redrob-ranker"
 sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrob-ranker"
 reproduce_command: "python rank.py --candidates ./data/candidates.jsonl --out ./submission.csv"
 
