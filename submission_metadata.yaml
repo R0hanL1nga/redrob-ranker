@@ -1,0 +1,57 @@
+# submission_metadata.yaml  ← fill in before submitting
+team_name: "your-team-name"
+
+primary_contact:
+  name: "Your Name"
+  email: "you@example.com"
+  phone: "+91-XXXXXXXXXX"
+
+team_members:
+  - name: "Your Name"
+    email: "you@example.com"
+    role: "Team Lead / ML Engineer"
+
+github_repo: "https://github.com/YOUR_USERNAME/redrob-ranker"
+sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrob-ranker"
+reproduce_command: "python rank.py --candidates ./data/candidates.jsonl --out ./submission.csv"
+
+compute:
+  platform: "Local Linux / MacBook"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.11"
+  os: "Ubuntu 22.04"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "Claude"
+
+ai_usage_summary: |
+  Used Claude for architecture discussion, code review, and documentation.
+  No candidate data was fed to any LLM during pipeline execution.
+
+methodology_summary: |
+  Rule-based scoring pipeline with explicit multi-dimensional feature
+  engineering. Five primary components (skill match, career relevance,
+  experience fit, education, certifications) combined with a
+  multiplicative behavioral-signal modifier.
+
+  The career_relevance component uses title scoring and a product-vs-
+  consulting company ratio to surface genuine ML practitioners over
+  keyword stuffers. A keyword_stuffer_flag applies a 0.20 penalty to
+  candidates with many AI skills but non-technical career titles.
+
+  Behavioral signals (availability, engagement, reliability, profile
+  quality) modify the primary score in the [0.60, 1.00] range — a
+  perfect-on-paper but inactive candidate loses up to 40% of their
+  score. Runtime is < 60 seconds for 50K candidates on CPU.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
