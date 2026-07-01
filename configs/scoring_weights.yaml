@@ -1,0 +1,48 @@
+# configs/scoring_weights.yaml
+#
+# Controls all tunable parameters for the Redrob Candidate Ranking pipeline.
+# Edit these values to experiment with different ranking strategies.
+# No code changes required.
+#
+# Weights in each group must sum to 1.0.
+
+# ============================================================================
+# Job Description Parameters
+# ============================================================================
+jd_experience_min: 5          # JD says "5–9 years"
+jd_experience_max: 9
+jd_experience_sweet_min: 6    # "Ideal: 6-8 yrs" (inferred from JD)
+jd_experience_sweet_max: 8
+
+# ============================================================================
+# Primary Score Weights
+# Sum must equal 1.0
+# ============================================================================
+primary_weights:
+  skill_match: 0.35         # Core AI skill depth + assessment scores
+  career_relevance: 0.30    # Title, product-company background, AI tenure
+  experience_fit: 0.15      # YoE vs JD target range
+  education: 0.10           # Institution tier
+  certifications: 0.10      # Relevant AI/ML certifications
+
+# ============================================================================
+# Behavioral Signal Weights (within behavioral modifier computation)
+# Sum must equal 1.0
+# ============================================================================
+behavioral_weights:
+  availability_score: 0.35    # Recency + open-to-work flag
+  engagement_score: 0.30      # Recruiter response rate + speed
+  reliability_score: 0.20     # Interview completion + offer acceptance
+  profile_quality_score: 0.15 # Profile completeness + verifications
+
+# ============================================================================
+# Modifier Bounds
+# Behavioral modifier is clamped to [behavioral_modifier_min, 1.0]
+# so even low-signal candidates retain behavioral_modifier_min of their score
+# ============================================================================
+behavioral_modifier_min: 0.60
+
+# ============================================================================
+# Penalty Values
+# ============================================================================
+keyword_stuffer_penalty: 0.20   # Subtracted from raw_score if flag == 1
